@@ -1,0 +1,10 @@
+# binaries
+*.class
+*.jar
+
+# build file
+build.xml
+build.properties
+
+# javadocs
+javadoc/
