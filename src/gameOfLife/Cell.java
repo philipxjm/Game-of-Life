@@ -36,12 +36,12 @@ public class Cell {
 			cells[cellsToFlip.get(i).x][cellsToFlip.get(i).y].state ^= true;	
 	}
 
-	public static void setState(int i, int j, boolean state) {
-		cells[i][j].state = state;
+	public static void setState(int x, int y, boolean state) {
+		cells[x][y].state = state;
 	}
 
-	public static boolean getState(int i, int j) {
-		return cells[i][j].state;
+	public static boolean getState(int x, int y) {
+		return cells[x][y].state;
 	}
 
 	public static int getWidth() {
