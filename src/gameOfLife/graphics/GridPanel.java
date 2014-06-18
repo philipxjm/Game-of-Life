@@ -71,8 +71,8 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
             for(int j = 0; j < Client.core.grid.getHeight(); j++) {
                 if(Client.core.grid.getState(i,j))
                     g2d.fillRect(
-                            (i - 1) * cellPix,
-                            600 - (j * cellPix),
+                            i * cellPix,
+                            600 - (j + 1) * cellPix,
                             cellPix,
                             cellPix);
             }

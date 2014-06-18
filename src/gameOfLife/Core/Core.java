@@ -16,9 +16,11 @@ public class Core {
     
     public Grid grid;
     private Timer animator;
+    private boolean wrapAround;
 
     public Core(Grid grid){
         this.grid = grid;
+        wrapAround = true;
     }
 
     public void tick() {
@@ -34,22 +36,33 @@ public class Core {
     }
 
     private boolean flipCalculate(int i, int j) {
+        int right = i+1, left = i-1, top = j+1, bottom = j-1;
+        if(wrapAround) {
+            if(i == 0)
+                left = grid.getWidth() - 1;
+            else if(i == grid.getWidth() - 1)
+                right = 0;
+            if(j == 0)
+                bottom = grid.getHeight() - 1;
+            else if(j == grid.getHeight() - 1)
+                top = 0;
+        }
         int nNeighbors = 0;
-        if(grid.getState(i+1, j+1))
+        if(grid.getState(right, top))
             nNeighbors++;
-        if(grid.getState(i+1, j))
+        if(grid.getState(right, j))
             nNeighbors++;
-        if(grid.getState(i+1, j-1))
+        if(grid.getState(right, bottom))
             nNeighbors++;
-        if(grid.getState(i, j+1))
+        if(grid.getState(i, top))
             nNeighbors++;
-        if(grid.getState(i, j-1))
+        if(grid.getState(i, bottom))
             nNeighbors++;
-        if(grid.getState(i-1, j+1))
+        if(grid.getState(left, top))
             nNeighbors++;
-        if(grid.getState(i-1, j))
+        if(grid.getState(left, j))
             nNeighbors++;
-        if(grid.getState(i-1, j-1))
+        if(grid.getState(left, bottom))
             nNeighbors++;
         return (grid.getState(i, j) && (nNeighbors < 2 || nNeighbors > 3)) || (!grid.getState(i, j) && nNeighbors == 3);
     }
