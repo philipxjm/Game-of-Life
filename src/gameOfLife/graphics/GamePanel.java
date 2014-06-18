@@ -14,21 +14,23 @@ public class GamePanel extends JPanel{
 
     private Dimension size;
     private JLabel animatorLabel, animationStatusLabel, templateLabel;
-    private JButton tickButton, clearButton, animatorButton, stopAnimationButton, gridSizeButton, about, loadTemplateButton;
+    private JButton tickButton, clearButton, animatorButton, saveButton, gridSizeButton, about, loadTemplateButton, loadButton;
     public JToggleButton magicTouchButton;
     private JSlider tpsSlider;
     private JList<String> templateList;
     public int gridSize = 1;
+    private boolean animating;
 
     public GamePanel(Dimension size) {
         super();
         this.size = size;
         this.setLayout(null);
+        animating = false;
         setTickButton();
         setClearButton();
         setTpsSlider();
         setAnimatorButton();
-        setStopAnimationButton();
+        setSaveButton();
         setAnimationStatusLabel();
         setHelpAbout();
         setMagicTouchButton();
@@ -36,6 +38,7 @@ public class GamePanel extends JPanel{
         setTemplateList();
         setLoadTemplateButton();
         setGridSizeButton();
+        setLoadButton();
     }
 
     public void paintComponent(Graphics g) {
@@ -87,11 +90,22 @@ public class GamePanel extends JPanel{
         animatorButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client.core.stopAnimation();
-                Client.core.animate(tpsSlider.getValue());
-                animationStatusLabel.setText("Animating at " + tpsSlider.getValue() + " ms/t");
-                animationStatusLabel.setBounds(12, 280, 165, 40);
-                repaint();
+                if(animating == false) {
+                    Client.core.stopAnimation();
+                    Client.core.animate(tpsSlider.getValue());
+                    animating = true;
+                    animationStatusLabel.setText("Animating at " + tpsSlider.getValue() + " ms/t");
+                    animationStatusLabel.setBounds(12, 280, 165, 40);
+                    animatorButton.setText("Stop");
+                    repaint();
+                }else{
+                    animatorButton.setText("Animate");
+                    animating = false;
+                    Client.core.stopAnimation();
+                    animationStatusLabel.setText("Animation Stopped");
+                    animationStatusLabel.setBounds(25,280,165,40);
+                    repaint();
+                }
             }
         });
         this.add(animatorButton);
@@ -101,19 +115,26 @@ public class GamePanel extends JPanel{
         this.add(animatorLabel);
     }
 
-    public void setStopAnimationButton(){
-        stopAnimationButton = new JButton("Stop");
-        stopAnimationButton.setBounds(5,240,165,40);
-        stopAnimationButton.addActionListener(new ActionListener() {
+    public void setLoadButton(){
+        loadButton = new JButton("Load");
+        loadButton.setBounds(5, 240, 80, 40);
+        loadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client.core.stopAnimation();
-                animationStatusLabel.setText("Animation Stopped");
-                animationStatusLabel.setBounds(25,280,165,40);
-                repaint();
             }
         });
-        this.add(stopAnimationButton);
+        this.add(loadButton);
+    }
+
+    public void setSaveButton(){
+        saveButton = new JButton("Save");
+        saveButton.setBounds(90, 240, 80, 40);
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            }
+        });
+        this.add(saveButton);
     }
 
     public void setAnimationStatusLabel(){
@@ -123,16 +144,18 @@ public class GamePanel extends JPanel{
     }
 
     public void setTpsSlider(){
-        tpsSlider = new JSlider(1, 100, 50);
+        tpsSlider = new JSlider(10, 2000, 50);
         tpsSlider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                animatorButton.repaint();
+                Client.core.stopAnimation();
+                Client.core.animate(tpsSlider.getValue());
+                animationStatusLabel.setText("Animating at " + tpsSlider.getValue() + " ms/t");
+                repaint();
             }
         });
         tpsSlider.setBounds(0, 140, 175, 60);
-        tpsSlider.setMajorTickSpacing(1975);
-        tpsSlider.setMinorTickSpacing(79);
+        tpsSlider.setMajorTickSpacing(1990);
         tpsSlider.setPaintTicks(true);
         tpsSlider.setPaintLabels(true);
         this.add(tpsSlider);
