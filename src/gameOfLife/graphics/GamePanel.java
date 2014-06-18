@@ -69,6 +69,8 @@ public class GamePanel extends JPanel{
     }
 
     public void positionDisplaySetup(Graphics2D g2d) {  // this set up the x and y position display
+        g2d.setColor(Color.WHITE);
+        g2d.fillRect(0,0,70,50);
         g2d.setColor(Color.BLACK);
         String posiX = "X: " + Client.gridPanel.getMouseX();
         String posiY = "Y: " + Client.gridPanel.getMouseY();
