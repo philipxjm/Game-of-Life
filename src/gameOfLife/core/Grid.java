@@ -48,8 +48,12 @@ public class Grid {
     }
 
     public void loadTemplate(String str){
+        Grid grid = new Grid(0,0);
         if(str.equals("Glider"))
-            addGrid(FileHandler.read(new File("res/examples/glider.golmap")), getWidth() / 2, getHeight() / 2);
+            grid = FileHandler.read(new File("res/examples/glider.golmap"));
+        else if(str.equals("Glider Gun"))
+            grid = FileHandler.read(new File("res/examples/glider-gun.golmap"));
+        addGrid(grid, (getWidth() - grid.getWidth()) / 2, (getHeight() - grid.getHeight()) / 2);
         /*
         else if(str.equals("Glider Gun") && Client.gamePanel.gridSize != 3){
             int s = 10;
