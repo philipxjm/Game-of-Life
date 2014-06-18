@@ -5,6 +5,7 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.event.*;
+import gameOfLife.core.Grid;
 
 /**
  * Created by Philip on 6/15/14.
@@ -19,9 +20,9 @@ public class GamePanel extends JPanel{
     private JList<String> templateList;
     public int gridSize = 1;
 
-    public GamePanel(Dimension d) {
+    public GamePanel(Dimension size) {
         super();
-        this.size = d;
+        this.size = size;
         this.setLayout(null);
         setTickButton();
         setClearButton();
@@ -64,7 +65,7 @@ public class GamePanel extends JPanel{
     }
 
     public Dimension getPreferredSize() {
-        return this.size;
+        return size;
     }
 
     public void positionDisplaySetup(Graphics2D g2d) {//this set up the x and y position display
@@ -154,7 +155,7 @@ public class GamePanel extends JPanel{
         clearButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client.grid.initGrid(Client.gridX, Client.gridY);
+                Client.core.grid = new Grid(80, 60);
                 Client.gridPanel.repaint();
             }
         });
@@ -227,7 +228,7 @@ public class GamePanel extends JPanel{
         loadTemplateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Client.grid.loadTemplate(templateList.getSelectedValue());
+                //Client.grid.loadTemplate(templateList.getSelectedValue());
                 Client.gridPanel.repaint();
             }
         });
@@ -241,25 +242,19 @@ public class GamePanel extends JPanel{
             @Override
             public void actionPerformed(ActionEvent e) {
                 if(gridSize == 1){
-                    Client.grid.initGrid(160,120);
-                    Client.gridX = 160;
-                    Client.gridY = 120;
+                    Client.core.grid = new Grid(160, 120);
                     Client.gridPanel.reset();
                     gridSizeButton.setText("160 x 120");
                     repaint();
                     gridSize++;
                 }else if(gridSize == 2){
-                    Client.grid.initGrid(40,30);
-                    Client.gridX = 40;
-                    Client.gridY = 30;
+                    Client.core.grid = new Grid(40, 30);
                     Client.gridPanel.reset();
                     gridSizeButton.setText("40 x 30");
                     repaint();
                     gridSize++;
                 }else {
-                    Client.grid.initGrid(80,60);
-                    Client.gridX = 80;
-                    Client.gridY = 60;
+                    Client.core.grid = new Grid(80, 60);
                     Client.gridPanel.reset();
                     gridSizeButton.setText("80 x 60");
                     repaint();

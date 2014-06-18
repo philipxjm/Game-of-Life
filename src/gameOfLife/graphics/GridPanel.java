@@ -46,11 +46,11 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
     }
 
     public void reset(){
-        if(Client.gridX == 80)
+        if(Client.core.grid.getWidth() == 80)
             cellPix = 10;
-        else if(Client.gridX == 160)
+        else if(Client.core.grid.getWidth() == 160)
             cellPix = 5;
-        else if(Client.gridX == 40)
+        else if(Client.core.grid.getWidth() == 40)
             cellPix = 20;
         else
             cellPix = 10;
@@ -67,10 +67,11 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
 
     public void paintCells(Graphics2D g2d) {
         g2d.setColor(Color.BLUE);
-        for(int i = 1; i < Client.grid.getGrid().length - 1; i++) {
-            for(int j = 1; j < Client.grid.getGrid()[0].length - 1; j++) {
-                if(Client.grid.getState(i,j))
-                    g2d.fillRect((i - 1) * cellPix,
+        for(int i = 0; i < Client.core.grid.getWidth(); i++) {
+            for(int j = 0; j < Client.core.grid.getHeight(); j++) {
+                if(Client.core.grid.getState(i,j))
+                    g2d.fillRect(
+                            (i - 1) * cellPix,
                             600 - (j * cellPix),
                             cellPix,
                             cellPix);
@@ -118,9 +119,9 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
 
     public void mouseMoved(MouseEvent e) { // this is called every tick the mouse is moved.
         mouseX = (e.getPoint().x - 1)/cellPix + 1;
-        mouseY = Client.gridY - (((e.getPoint().y - 3)/cellPix));
+        mouseY = Client.core.grid.getHeight() - (((e.getPoint().y - 3)/cellPix));
         if(magicTouchOn) {
-            Client.grid.getGrid()[(int) mouseX][(int) mouseY].setState(true);
+            Client.core.grid.setState((int) mouseX, (int) mouseY, true);
             paintImmediately(((int) mouseX - 1) * cellPix,
                     600 - ((int) mouseY * cellPix),
                     cellPix,
@@ -135,7 +136,7 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
     }
 
     public Dimension getPreferredSize() {
-        return this.size;
+        return size;
     }
 
     @Override
@@ -145,8 +146,9 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
             Client.gamePanel.magicTouchButton.setSelected(false);
         }
         else {
-            Client.grid.getGrid()[(int) mouseX][(int) mouseY].flipState();
-            paintImmediately(((int) mouseX - 1) * cellPix,
+            Client.core.grid.flipState((int) mouseX, (int) mouseY);
+            paintImmediately(
+                    ((int) mouseX - 1) * cellPix,
                     600 - ((int) mouseY * cellPix),
                     cellPix,
                     cellPix);

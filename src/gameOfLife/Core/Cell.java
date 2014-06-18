@@ -4,15 +4,14 @@ package gameOfLife.core;
  * Created by Philip Xu on 6/15/14.
  */
 public class Cell {
-    private boolean state;
 
+    private boolean state;
 
     public Cell(){
         state = false;
     }
 
-
-    public boolean getState() {
+    public boolean getState(){
         return state;
     }
 
@@ -21,8 +20,6 @@ public class Cell {
     }
 
     public void flipState(){
-        this.state = !state;
+        state = !state;
     }
-
-
 }

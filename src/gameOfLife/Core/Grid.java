@@ -6,14 +6,10 @@ import gameOfLife.graphics.Client;
  * Created by Philip Xu on 6/15/14.
  */
 public class Grid {
+    
     private Cell[][] grid;
 
-    public Grid(int x, int y){
-        grid = new Cell[x][y];
-        initGrid(x, y);
-    }
-
-    public void initGrid(int width, int height) {
+    public Grid(int width, int height){
         grid = new Cell[width + 2][height + 2];
         for(int i = 0; i < width + 2; i++) {
             for(int j = 0; j < height + 2; j++) {
@@ -22,7 +18,27 @@ public class Grid {
         }
     }
 
-    public void loadTemplate(String str){
+    public boolean getState(int x, int y) {
+        return grid[x + 1][y + 1].getState();
+    }
+
+    public void setState(int x, int y, boolean state) {
+        grid[x + 1][y + 1].setState(state);
+    }
+
+    public void flipState(int x, int y) {
+        grid[x + 1][y + 1].flipState();
+    }
+
+    public int getWidth() {
+        return grid.length - 2;
+    }
+
+    public int getHeight() {
+        return grid[0].length - 2;
+    }
+
+    /*public void loadTemplate(String str){
         initGrid(Client.gridX,Client.gridY);
         if(str.equals("Glider")){
             grid[10][10].setState(true);
@@ -146,14 +162,5 @@ public class Grid {
             grid[s - 3][d - 6].setState(true);
             grid[s - 4][d - 6].setState(true);
         }
-    }
-
-    public boolean getState(int x, int y) {
-        return grid[x][y].getState();
-    }
-
-    public Cell[][] getGrid(){
-        return grid;
-    }
-
+    }*/
 }

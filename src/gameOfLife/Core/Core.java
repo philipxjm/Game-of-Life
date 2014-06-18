@@ -13,8 +13,9 @@ import gameOfLife.graphics.Client;
  *
  */
 public class Core {
-    Grid grid;
-    Timer animator;
+    
+    public Grid grid;
+    private Timer animator;
 
     public Core(Grid grid){
         this.grid = grid;
@@ -22,15 +23,35 @@ public class Core {
 
     public void tick() {
         ArrayList<Point> cellsToFlip = new ArrayList<Point>();
-        for(int i = 1; i < grid.getGrid().length - 1; i++) {
-            for(int j = 1; j < grid.getGrid()[0].length - 1; j++) {
+        for(int i = 0; i < grid.getWidth(); i++) {
+            for(int j = 0; j < grid.getHeight(); j++) {
                 if(flipCalculate(i, j))
                     cellsToFlip.add(new Point(i, j));
             }
         }
-        for(int i = 0; i < cellsToFlip.size(); i++) {
-            grid.getGrid()[cellsToFlip.get(i).x][cellsToFlip.get(i).y].flipState();
-        }
+        for(int i = 0; i < cellsToFlip.size(); i++)
+            grid.flipState(cellsToFlip.get(i).x, cellsToFlip.get(i).y);
+    }
+
+    private boolean flipCalculate(int i, int j) {
+        int nNeighbors = 0;
+        if(grid.getState(i+1, j+1))
+            nNeighbors++;
+        if(grid.getState(i+1, j))
+            nNeighbors++;
+        if(grid.getState(i+1, j-1))
+            nNeighbors++;
+        if(grid.getState(i, j+1))
+            nNeighbors++;
+        if(grid.getState(i, j-1))
+            nNeighbors++;
+        if(grid.getState(i-1, j+1))
+            nNeighbors++;
+        if(grid.getState(i-1, j))
+            nNeighbors++;
+        if(grid.getState(i-1, j-1))
+            nNeighbors++;
+        return (grid.getState(i, j) && (nNeighbors < 2 || nNeighbors > 3)) || (!grid.getState(i, j) && nNeighbors == 3);
     }
 
     public void animate(int ms){
@@ -48,27 +69,5 @@ public class Core {
         if(animator != null){
             animator.stop();
         }
-    }
-
-    public boolean flipCalculate(int i, int j) {
-        int nNeighbors = 0;
-        if(grid.getGrid()[i+1][j+1].getState())
-            nNeighbors++;
-        if(grid.getGrid()[i+1][j].getState())
-            nNeighbors++;
-        if(grid.getGrid()[i+1][j-1].getState())
-            nNeighbors++;
-        if(grid.getGrid()[i][j+1].getState())
-            nNeighbors++;
-        if(grid.getGrid()[i][j-1].getState())
-            nNeighbors++;
-        if(grid.getGrid()[i-1][j+1].getState())
-            nNeighbors++;
-        if(grid.getGrid()[i-1][j].getState())
-            nNeighbors++;
-        if(grid.getGrid()[i-1][j-1].getState())
-            nNeighbors++;
-        return (grid.getGrid()[i][j].getState() && (nNeighbors < 2 || nNeighbors > 3))
-                || (!grid.getGrid()[i][j].getState() && nNeighbors == 3);
     }
 }
