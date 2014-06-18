@@ -10,10 +10,10 @@ import java.awt.image.BufferedImage;
 /**
  * Created by Philip Xu on 6/15/14.
  */
-public class GridPanel extends JPanel implements MouseMotionListener, MouseListener{
+public class GridPanel extends JPanel implements MouseMotionListener, MouseListener {
     protected Dimension size;
-    public int mouseX;
-    public int mouseY;
+    private int mouseX;
+    private int mouseY;
     private int cellPix;
     boolean magicTouchOn;
 
@@ -102,27 +102,11 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
         g2d.fillRect(0,0,this.getPreferredSize().width,this.getPreferredSize().height);
     }
 
-    public double getMouseX(){
-        return mouseX;
-    }
-
-    public double getMouseY(){
-        return mouseY;
-    }
-
-
     public void mouseMoved(MouseEvent e) { // this is called every tick the mouse is moved.
         mouseX = (e.getPoint().x - 1)/cellPix;
         mouseY = Client.core.grid.getHeight() - (((e.getPoint().y - 3)/cellPix)) - 1;
-        if(magicTouchOn) {
-            Client.core.grid.setState((int) mouseX, (int) mouseY, true);
-            paintImmediately(
-                    ((int) mouseX + 2) * cellPix,
-                    600 - ((int) mouseY + 3) * cellPix,
-                    cellPix,
-                    cellPix);
-        }
-        System.out.println("x: " + mouseX + " y: " + mouseY);
+        if(magicTouchOn)
+            Client.core.grid.setState(mouseX, mouseY, true);
         Client.gridPanel.repaint();
         Client.gamePanel.repaint();
     }
@@ -141,14 +125,8 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
             magicTouchOn = false;
             Client.gamePanel.magicTouchButton.setSelected(false);
         }
-        else {
-            Client.core.grid.flipState((int) mouseX, (int) mouseY);
-            paintImmediately(
-                    ((int) mouseX - 1) * cellPix,
-                    600 - ((int) mouseY * cellPix),
-                    cellPix,
-                    cellPix);
-        }
+        else
+            Client.core.grid.flipState(mouseX, mouseY);
     }
 
     @Override
@@ -169,5 +147,13 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    public int getMouseX() {
+        return mouseX;
+    }
+
+    public int getMouseY() {
+        return mouseY;
     }
 }
