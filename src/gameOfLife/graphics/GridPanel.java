@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
  */
 public class GridPanel extends JPanel implements MouseMotionListener, MouseListener{
     protected Dimension size;
-    public double mouseX;
-    public double mouseY;
+    public int mouseX;
+    public int mouseY;
     private int cellPix;
     boolean magicTouchOn;
 
@@ -46,21 +46,15 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
     }
 
     public void reset(){
-        if(Client.core.grid.getWidth() == 80)
-            cellPix = 10;
-        else if(Client.core.grid.getWidth() == 160)
-            cellPix = 5;
-        else if(Client.core.grid.getWidth() == 40)
-            cellPix = 20;
-        else
-            cellPix = 10;
+        cellPix = 800 / Client.core.grid.getWidth();
         repaint();
     }
 
     public void paintCursor(Graphics2D g2d){
         g2d.setColor(Color.RED);
-        g2d.fillRect(((int) mouseX - 1) * cellPix,
-                600 - ((int) mouseY * cellPix),
+        g2d.fillRect(
+                mouseX * cellPix,
+                600 - (mouseY + 1) * cellPix,
                 cellPix,
                 cellPix);
     }
@@ -69,7 +63,7 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
         g2d.setColor(Color.BLUE);
         for(int i = 0; i < Client.core.grid.getWidth(); i++) {
             for(int j = 0; j < Client.core.grid.getHeight(); j++) {
-                if(Client.core.grid.getState(i,j))
+                if(Client.core.grid.getState(i, j))
                     g2d.fillRect(
                             i * cellPix,
                             600 - (j + 1) * cellPix,
@@ -118,15 +112,17 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
 
 
     public void mouseMoved(MouseEvent e) { // this is called every tick the mouse is moved.
-        mouseX = (e.getPoint().x - 1)/cellPix + 1;
-        mouseY = Client.core.grid.getHeight() - (((e.getPoint().y - 3)/cellPix));
+        mouseX = (e.getPoint().x - 1)/cellPix;
+        mouseY = Client.core.grid.getHeight() - (((e.getPoint().y - 3)/cellPix)) - 1;
         if(magicTouchOn) {
             Client.core.grid.setState((int) mouseX, (int) mouseY, true);
-            paintImmediately(((int) mouseX - 1) * cellPix,
-                    600 - ((int) mouseY * cellPix),
+            paintImmediately(
+                    ((int) mouseX + 2) * cellPix,
+                    600 - ((int) mouseY + 3) * cellPix,
                     cellPix,
                     cellPix);
         }
+        System.out.println("x: " + mouseX + " y: " + mouseY);
         Client.gridPanel.repaint();
         Client.gamePanel.repaint();
     }
