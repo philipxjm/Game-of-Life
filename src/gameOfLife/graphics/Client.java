@@ -1,9 +1,9 @@
-package Graphics;
+package gameOfLife.graphics;
 
 import javax.swing.*;
 import java.awt.*;
-import Core.*;
 import java.net.URL;
+import gameOfLife.core.*;
 
 /**
  * Created by Philip Xu on 6/15/14.

@@ -1,6 +1,6 @@
-package Core;
+package gameOfLife.core;
 
-import Graphics.Client;
+import gameOfLife.graphics.Client;
 
 /**
  * Created by Philip Xu on 6/15/14.

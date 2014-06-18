@@ -1,4 +1,4 @@
-package Graphics;
+package gameOfLife.graphics;
 
 import java.awt.*;
 import javax.swing.*;

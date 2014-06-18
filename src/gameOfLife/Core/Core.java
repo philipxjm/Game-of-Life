@@ -1,11 +1,11 @@
-package Core;
+package gameOfLife.core;
 
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.Timer;
-import Graphics.Client;
+import gameOfLife.graphics.Client;
 
 /**
  * Created by Philip Xu and Daniel Boerlage on 6/15/14.

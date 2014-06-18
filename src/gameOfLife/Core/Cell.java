@@ -1,4 +1,4 @@
-package Core;
+package gameOfLife.core;
 
 /**
  * Created by Philip Xu on 6/15/14.
