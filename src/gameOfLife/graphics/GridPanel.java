@@ -41,8 +41,8 @@ public class GridPanel extends JPanel implements MouseMotionListener, MouseListe
                 RenderingHints.VALUE_ANTIALIAS_ON);
         gridBackgroundColorSetup(g2d);
         gridSetup(g2d);
-        paintCursor(g2d);
         paintCells(g2d);
+        paintCursor(g2d);
     }
 
     public void reset(){
