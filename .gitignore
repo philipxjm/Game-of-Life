@@ -11,4 +11,4 @@ javadoc/
 
 # ide
 .idea/
-Game-of-Life.iml
+*.iml
