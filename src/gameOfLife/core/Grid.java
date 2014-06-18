@@ -18,6 +18,10 @@ public class Grid {
         }
     }
 
+    public void addGrid(Grid grid, int x, int y) {
+        //for(int i = x; i < )
+    }
+
     public boolean getState(int x, int y) {
         return grid[x + 1][y + 1].getState();
     }

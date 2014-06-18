@@ -12,8 +12,7 @@ import java.awt.image.BufferedImage;
  */
 public class GridPanel extends JPanel implements MouseMotionListener, MouseListener {
     protected Dimension size;
-    private int mouseX;
-    private int mouseY;
+    private int mouseX, mouseY;
     private int cellPix;
     boolean magicTouchOn;
 
