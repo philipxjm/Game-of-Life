@@ -8,3 +8,7 @@ build.properties
 
 # javadocs
 javadoc/
+
+# ide
+.idea/
+*.iml
