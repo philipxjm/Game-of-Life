@@ -68,12 +68,12 @@ public class GamePanel extends JPanel{
         return size;
     }
 
-    public void positionDisplaySetup(Graphics2D g2d) {//this set up the x and y position display
+    public void positionDisplaySetup(Graphics2D g2d) {  // this set up the x and y position display
         g2d.setColor(Color.BLACK);
         String posiX = "X: " + Client.gridPanel.getMouseX();
         String posiY = "Y: " + Client.gridPanel.getMouseY();
-        //Font font = new Font("Eras Bold ITC", Font.PLAIN, 20);
-        //g2d.setFont(font);
+        Font font = new Font("Eras Bold ITC", Font.PLAIN, 20);
+        g2d.setFont(font);
         // ^ those two lines make it look pretty but really really slow, to be fixed.
         g2d.drawString(posiX,10,20);
         g2d.drawString(posiY,10,40);
