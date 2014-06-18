@@ -1,6 +1,7 @@
 package gameOfLife.core;
 
 import gameOfLife.graphics.Client;
+import java.io.File;
 
 /**
  * Created by Philip Xu on 6/15/14.
@@ -19,7 +20,11 @@ public class Grid {
     }
 
     public void addGrid(Grid grid, int x, int y) {
-        //for(int i = x; i < )
+        for(int i = x; i < this.grid.length-1 && i - x < grid.getWidth(); i++) {
+            for(int j = y; j < this.grid[0].length-1 && j - y < grid.getHeight(); j++) {
+                setState(i, j, grid.getState(i - x, j - y));
+            }
+        }
     }
 
     public boolean getState(int x, int y) {
@@ -42,15 +47,10 @@ public class Grid {
         return grid[0].length - 2;
     }
 
-    /*public void loadTemplate(String str){
-        initGrid(Client.gridX,Client.gridY);
-        if(str.equals("Glider")){
-            grid[10][10].setState(true);
-            grid[11][11].setState(true);
-            grid[12][9].setState(true);
-            grid[12][10].setState(true);
-            grid[12][11].setState(true);
-        }
+    public void loadTemplate(String str){
+        if(str.equals("Glider"))
+            addGrid(FileHandler.read(new File("res/examples/glider.golmap")), getWidth() / 2, getHeight() / 2);
+        /*
         else if(str.equals("Glider Gun") && Client.gamePanel.gridSize != 3){
             int s = 10;
             int d = 30;
@@ -165,6 +165,6 @@ public class Grid {
             grid[s - 2][d - 6].setState(true);
             grid[s - 3][d - 6].setState(true);
             grid[s - 4][d - 6].setState(true);
-        }
-    }*/
+        }*/
+    }
 }

@@ -230,7 +230,7 @@ public class GamePanel extends JPanel{
         loadTemplateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                //Client.grid.loadTemplate(templateList.getSelectedValue());
+                Client.core.grid.loadTemplate(templateList.getSelectedValue());
                 Client.gridPanel.repaint();
             }
         });
