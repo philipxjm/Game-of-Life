@@ -40,7 +40,7 @@ public class Client {
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setResizable(false);
-        ImageIcon icon = new ImageIcon("icon.gif");
+        ImageIcon icon = new ImageIcon("res/images/icon.gif");
         frame.setIconImage(icon.getImage());
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setBounds( (int)(screenSize.getWidth()/2 - 500),
